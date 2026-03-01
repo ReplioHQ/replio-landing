@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Replio — One Dashboard. Every Platform. Zero Missed Guests.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #E4002B;
+      --dark: #140606;
+      --darker: #0a0303;
+      --white: #FFFFFF;
+      --gray: #9ca3af;
+      --light-gray: #f3f4f6;
+      --card-bg: #1e0808;
+      --border: rgba(228, 0, 43, 0.2);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--dark);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(20, 6, 6, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--red); }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--white); }
+
+    .btn-nav {
+      background: var(--red);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .btn-nav:hover { opacity: 0.9; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 60px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(228, 0, 43, 0.12);
+      border: 1px solid rgba(228, 0, 43, 0.4);
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--gray);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); }
+
+    /* PLATFORM STRIP */
+    .platforms {
+      padding: 40px 60px 60px;
+      text-align: center;
+    }
+
+    .platforms p {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .platform-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .platform-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+
+    .platform-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* PROBLEM SECTION */
+    .section {
+      padding: 80px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .section > p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    /* STAT CARDS */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .stat-card .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card .label {
+      color: var(--gray);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* HOW IT WORKS */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .how-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(228, 0, 43, 0.15);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .how-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .how-card p {
+      color: var(--gray);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* HEARD SECTION */
+    .heard-section {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 60px;
+    }
+
+    .heard-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .heard-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .heard-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .heard-letter {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .heard-step-text h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .heard-step-text p {
+      color: var(--gray);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      position: relative;
+    }
+
+    .price-card.featured {
+      border-color: var(--red);
+      background: linear-gradient(135deg, rgba(228,0,43,0.08), var(--card-bg));
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .plan-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .plan-price sup {
+      font-size: 1.4rem;
+      vertical-align: super;
+    }
+
+    .plan-price sub {
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: var(--gray);
+    }
+
+    .plan-desc {
+      color: var(--gray);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .plan-features li {
+      display: flex;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--gray);
+      align-items: flex-start;
+    }
+
+    .plan-features li::before {
+      content: "✓";
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: opacity 0.2s;
+    }
+
+    .plan-btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      background: transparent;
+    }
+
+    .plan-btn-filled {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+    }
+
+    .plan-btn:hover { opacity: 0.85; }
+
+    /* TESTIMONIAL / QUOTE */
+    .quote-section {
+      padding: 80px 60px;
+      text-align: center;
+    }
+
+    .quote-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    blockquote span { color: var(--red); }
+
+    .quote-author {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* CTA FOOTER */
+    .cta-footer {
+      background: var(--red);
+      padding: 80px 60px;
+      text-align: center;
+    }
+
+    .cta-footer h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .cta-footer p {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      margin-bottom: 36px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--red);
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+
+    .btn-white:hover { opacity: 0.9; }
+
+    /* FOOTER */
+    footer {
+      background: var(--darker);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .logo { font-size: 1.2rem; }
+
+    footer p {
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--white); }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav ul { display: none; }
+      .hero { padding: 60px 24px 40px; }
+      .platforms { padding: 24px 24px 40px; }
+      .section { padding: 60px 24px; }
+      .heard-section { padding: 60px 24px; }
+      .heard-inner { grid-template-columns: 1fr; gap: 40px; }
+      .quote-section { padding: 60px 24px; }
+      .cta-footer { padding: 60px 24px; }
+      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Replio<span>.</span></div>
+    <ul>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#heard">The HEARD Model</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#pricing" class="btn-nav">Get Early Access</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Built by a Team Member Who Knows Customer Care.</div>
+    <h1>One Dashboard.<br /><span>Every Platform.</span><br />Zero Missed Guests.</h1>
+    <p>
+      Your guests leave reviews on Google, Yelp, Facebook, TripAdvisor, and your delivery apps.
+      Replio watches all of them — and puts the right response in your hands in under 2 minutes a day.
+    </p>
+    <div class="hero-cta">
+      <a href="#pricing" class="btn-primary">Get Early Access — Free</a>
+      <a href="#how" class="btn-secondary">See How It Works</a>
+    </div>
+  </section>
+
+  <!-- PLATFORM STRIP -->
+  <div class="platforms">
+    <p>Every platform. All in one place.</p>
+    <div class="platform-logos">
+      <div class="platform-pill"><div class="dot"></div>Google</div>
+      <div class="platform-pill"><div class="dot"></div>Yelp</div>
+      <div class="platform-pill"><div class="dot"></div>Facebook</div>
+      <div class="platform-pill"><div class="dot"></div>TripAdvisor</div>
+      <div class="platform-pill"><div class="dot"></div>DoorDash</div>
+      <div class="platform-pill"><div class="dot"></div>Grubhub</div>
+      <div class="platform-pill"><div class="dot"></div>Uber Eats</div>
+      <div class="platform-pill"><div class="dot"></div>Apple Maps</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM SECTION -->
+  <section class="section">
+    <div class="section-label">The Problem</div>
+    <h2>You have 7+ places guests<br />can roast your restaurant.<br />You're watching <em>zero</em> of them.</h2>
+    <p>
+      Every hour a bad review sits unanswered, it costs you guests you never know you lost.
+      Replio fixes that — automatically, on every platform, in your voice.
+    </p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="number">7+</div>
+        <div class="label">Platforms where guests leave reviews — and most operators monitor none of them</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">72h</div>
+        <div class="label">Average response time for operators who respond at all — most never do</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">1★</div>
+        <div class="label">Drop on any platform = 5–9% revenue loss. Up to $135K on a $1.5M location</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">46%</div>
+        <div class="label">Of guests check reviews before visiting — across Google, Yelp, and Facebook</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">70%</div>
+        <div class="label">More likely to return: a guest whose complaint was resolved vs. one who never had a problem</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">$8K</div>
+        <div class="label">Additional annual revenue per additional star on Yelp per location</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-label">How It Works</div>
+    <h2>Your reputation.<br />On autopilot.</h2>
+    <p>Set it up once. Replio handles the rest — every platform, every review, every day.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="step-num">01</div>
+        <h3>Replio Watches Every Platform</h3>
+        <p>Connect your locations. Replio monitors Google, Yelp, Facebook, TripAdvisor, DoorDash, Grubhub, Uber Eats, and Apple Maps — all in real time. No more logging into 7 different apps.</p>
+      </div>
+      <div class="how-card">
+        <div class="step-num">02</div>
+        <h3>AI Drafts the Response</h3>
+        <p>Every review gets an AI-drafted response using the HEARD framework — personalized, on-brand, and in your voice. Not generic. Not corporate. Sounds like you wrote it yourself.</p>
+      </div>
+      <div class="how-card">
+        <div class="step-num">03</div>
+        <h3>You Set the Rules</h3>
+        <p>4-5 star reviews auto-post. Anything sensitive holds for your approval. Urgent issues — food safety, legal mentions, serious complaints — trigger an immediate alert to your phone.</p>
+      </div>
+      <div class="how-card">
+        <div class="step-num">04</div>
+        <h3>2-Minute Morning Digest</h3>
+        <p>Every morning, one summary. All platforms. All locations. Review it, approve what needs attention, and move on. Your entire reputation — managed before your first cup of coffee.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HEARD SECTION -->
+  <section class="heard-section" id="heard">
+    <div class="heard-inner">
+      <div>
+        <div class="section-label">The HEARD Framework</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; margin-bottom: 20px; line-height: 1.2;">
+          Every response built on the framework that turns guests around.
+        </h2>
+        <p style="color: var(--gray); font-size: 1rem; line-height: 1.7; margin-bottom: 0;">
+          The HEARD model is the hospitality standard inside Replio. Every AI-drafted response follows it — across every platform, every review, every time.
+          <br /><br />
+          A complaint resolved the right way makes a guest <strong style="color: var(--white);">70% more likely to return</strong> than someone who never had a problem. That's not just hospitality. That's revenue.
+        </p>
+      </div>
+      <div class="heard-steps">
+        <div class="heard-step">
+          <div class="heard-letter">H</div>
+          <div class="heard-step-text">
+            <h4>Hear</h4>
+            <p>Read the full review before typing anything. Actually understand what the guest experienced.</p>
+          </div>
+        </div>
+        <div class="heard-step">
+          <div class="heard-letter">E</div>
+          <div class="heard-step-text">
+            <h4>Empathize</h4>
+            <p>Lead with how they felt. "We're sorry you feel that way" is a hedge. That's not empathy — and guests know the difference.</p>
+          </div>
+        </div>
+        <div class="heard-step">
+          <div class="heard-letter">A</div>
+          <div class="heard-step-text">
+            <h4>Apologize</h4>
+            <p>A real one. No conditions. No deflection. Own it — even when it's hard.</p>
+          </div>
+        </div>
+        <div class="heard-step">
+          <div class="heard-letter">R</div>
+          <div class="heard-step-text">
+            <h4>Resolve</h4>
+            <p>Tell them what's changing, or personally invite them back. This is the Second Mile moment.</p>
+          </div>
+        </div>
+        <div class="heard-step">
+          <div class="heard-letter">D</div>
+          <div class="heard-step-text">
+            <h4>Delight</h4>
+            <p>Don't just get back to neutral. Leave them better than you found them. That's the standard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <div class="quote-inner">
+      <blockquote>
+        "I built Replio because I was that operator — <span>missing reviews</span> on platforms I didn't even know I had to watch. No operator should lose a guest they never even knew they had."
+      </blockquote>
+      <div class="quote-author">
+        — Chase Kubala, Multi-Unit Operating Partner · Chick-fil-A<br />
+        Missouri City &amp; Energy Corridor · Founder, Replio
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-label" style="text-align:center;">Pricing</div>
+    <h2 style="text-align:center; font-family:'Playfair Display',serif; margin-bottom:12px;">Simple pricing.<br />No surprises.</h2>
+    <p style="text-align:center; color:var(--gray); margin-bottom:48px;">
+      All plans include every platform. No setup fees. No long-term contracts. Cancel anytime.<br />
+      <strong style="color:var(--red);">Free during beta — get in now.</strong>
+    </p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><sup>$</sup>79<sub>/mo</sub></div>
+        <div class="plan-desc">Perfect for single-location operators just getting started.</div>
+        <ul class="plan-features">
+          <li>1 location</li>
+          <li>All 8 platforms monitored</li>
+          <li>AI response drafting</li>
+          <li>Owner Avatar System</li>
+          <li>Daily digest</li>
+          <li>Urgent issue alerts</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline">Get Early Access</a>
+      </div>
+      <div class="price-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="plan-name">Operator</div>
+        <div class="plan-price"><sup>$</sup>149<sub>/mo</sub></div>
+        <div class="plan-desc">Built for multi-unit operators managing 2–3 locations.</div>
+        <ul class="plan-features">
+          <li>Up to 3 locations</li>
+          <li>All 8 platforms monitored</li>
+          <li>AI response drafting</li>
+          <li>Owner Avatar System</li>
+          <li>Daily digest per location</li>
+          <li>Urgent issue alerts</li>
+          <li>Reputation analytics by location</li>
+          <li>Platform comparison reports</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-filled">Get Early Access</a>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">Multi-Unit</div>
+        <div class="plan-price"><sup>$</sup>299<sub>/mo</sub></div>
+        <div class="plan-desc">For franchisees and groups with unlimited locations.</div>
+        <ul class="plan-features">
+          <li>Unlimited locations</li>
+          <li>All 8 platforms monitored</li>
+          <li>AI response drafting</li>
+          <li>Owner Avatar System</li>
+          <li>Daily digest (all locations)</li>
+          <li>Urgent issue alerts</li>
+          <li>Full reputation analytics suite</li>
+          <li>Cross-location benchmarking</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-outline">Get Early Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FOOTER -->
+  <section class="cta-footer">
+    <h2>Your guests are talking.<br />Start listening.</h2>
+    <p>Join operators already on the waitlist for Replio beta access — free for founding members.</p>
+    <a href="#" class="btn-white">Get Early Access — It's Free</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">Replio<span style="color:var(--red);">.</span></div>
+    <p>Built for QSR operators. By a QSR operator.<br />ReplioHQ.com</p>
+    <div>
+      <a href="#">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
